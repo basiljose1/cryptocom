@@ -13,14 +13,24 @@ class TokenSerializer(serializers.Serializer):
             if not Token.objects.filter(key=token).exists():
             	msg = {
                 'status':'failure',
-                'errors':'Invalid token given.'
+                'errors':'Invalid token given.',
+                'status_code':400
                 }
-                raise serializers.ValidationError(msg)
+                # raise serializers.ValidationError(msg)
+            else:
+                msg = {
+                'status':'success',
+                'errors':'',
+                'status_code':200
+                }
+
         else:
             msg = {
                 'status':'failure',
-                'errors':'Must include token.'
+                'errors':'Must include token.',
+                'status_code':400
                 }
-            raise serializers.ValidationError(msg)
+            # raise serializers.ValidationError(msg)
 
+        attrs['msg'] = msg
         return attrs
